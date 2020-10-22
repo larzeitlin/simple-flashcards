@@ -24,7 +24,7 @@
    {:style {:text-align "center"
             :padding "30px"}}
 
-   [:h2 "Welcome to Reagent"]
+   [:h2 "Simple Flashcards"]
    [nav view-state-atom]
    (cond (= :play @view-state-atom)
          [play/home-page]
