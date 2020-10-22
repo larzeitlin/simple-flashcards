@@ -26,3 +26,5 @@ Once you connect to the nREPL, run `(cljs)` to switch to the ClojureScript REPL.
 lein clean
 lein package
 ```
+
+Having built for production try out locally by viewing the index.html file in the root of the project in a browser. 
