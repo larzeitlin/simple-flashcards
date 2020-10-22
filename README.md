@@ -1,3 +1,4 @@
+It's just a single page flashcard app. No magic, no DB, no sign-in, no persistence, all client side.
 
 
 [play with it here!](https://larzeitlin.github.io/simple-flashcards/index.html)
