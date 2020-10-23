@@ -1,23 +1,29 @@
 body {
-  font-family: 'Helvetica Neue', Verdana, Helvetica, Arial, sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
-  padding-top: 72px;
-  -webkit-font-smoothing: antialiased;
-  font-size: 1.125em;
-  color: #333;
-  line-height: 1.5em;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: light;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 72px;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1.125em;
+    color: #333;
+    line-height: 1.5em;
 }
 
 h1, h2, h3 {
-  color: #000;
+    color: #333;
 }
 h1 {
-  font-size: 2.5em
+    font-size: 2.5em
 }
 
 h2 {
-  font-size: 2em
+    font-size: 2em
 }
 
 h3 {
@@ -32,3 +38,64 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+main {
+    text-align: center;
+}
+
+.stats {
+    text-align: center;
+    font-size: 0.75em;
+    padding: 10px;
+    margin: 10px;
+}
+
+input[type=button] {
+    box-shadow: 0px 0px 0px 0px #000000;
+    background-color:#ffffff;
+    border-radius:3px;
+    border:1px solid #000000;
+    display:inline-block;
+    margin: 10px;
+    cursor:pointer;
+    color:#000000;
+    font-size:17px;
+    font-weight:light;
+    padding:5px 32px;
+    text-decoration:none;
+    box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.30);
+}
+
+input[type=button]:hover{
+    background-color: #EEEEEE;
+}
+
+.cardsInputArea{
+    height: 400px;
+    width: 400px;
+    text-align: center;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    overflow-wrap: normal;
+    white-space: pre;
+    border-style: solid;
+    border-radius:5px;
+    text-align: center;
+    line-height: 1.2;
+    border:1px solid #000000;
+    box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.30);
+
+
+}
+
+ .card {
+     border-style: solid;
+     border-radius:5px;
+     text-align: center;
+     line-height: 1.2;
+     border:1px solid #000000;
+     box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.30);
+
+ }
+

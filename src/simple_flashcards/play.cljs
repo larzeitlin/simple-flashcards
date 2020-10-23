@@ -26,35 +26,37 @@
                                       key))]
     (fn []
       [:input {:on-key-press (fn [e]
-                                    (when (= (.-key e) "Enter")
-                                      #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
+                               (when (= (.-key e) "Enter")
+                                 #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
       [:div
-         {:style {:border-style "solid"
+       {:class "card"}
+       #_{:style {:border-style "solid"
                   :text-align "center"
                   :line-height 1.2}}
-         [:h1 (if (:flipped? (get @flashcards (current-card-id-fn)))
-                (:rev (get @flashcards (current-card-id-fn)))
-                (:obv (get @flashcards (current-card-id-fn))))
-          [:div
-           [:br]
-           [:input {:type "button"
-                    :value "flip!"
-                    :on-click #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)
-                    :on-key-press (fn [e]
-                                    (when (= (.-key e) "Enter")
-                                      #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
-           (when (:flipped? (get @flashcards (current-card-id-fn)))
-             [:div
-              [:input {:type "button"
-                       :value "correct"
-                       :style {:color "green"}
-                       :on-click #(do (swap! score update :correct inc)
-                                      (swap! flashcards assoc-in [(current-card-id-fn) :result] "pass"))}]
-              [:input {:type "button"
-                       :value "incorrect"
-                       :style {:color "red"}
-                       :on-click #(do (swap! score update :incorrect inc)
-                                      (swap! flashcards assoc-in [(current-card-id-fn) :result] "fail"))}]])]]])))
+       [:h1 (if (:flipped? (get @flashcards (current-card-id-fn)))
+              (:rev (get @flashcards (current-card-id-fn)))
+              (:obv (get @flashcards (current-card-id-fn))))
+        [:div
+         [:br]
+         [:input {:type "button"
+                  :value "flip!"
+                  :on-click #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)
+                  :on-key-press (fn [e]
+                                  (when (= (.-key e) "Enter")
+                                    #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
+         (when (:flipped? (get @flashcards (current-card-id-fn)))
+           [:div
+            [:input {:type "button"
+                     :value "correct"
+                     :class "button"
+                     :style {:color "green"}
+                     :on-click #(do (swap! score update :correct inc)
+                                    (swap! flashcards assoc-in [(current-card-id-fn) :result] "pass"))}]
+            [:input {:type "button"
+                     :value "incorrect"
+                     :style {:color "red"}
+                     :on-click #(do (swap! score update :incorrect inc)
+                                    (swap! flashcards assoc-in [(current-card-id-fn) :result] "fail"))}]])]]])))
 
 (defn flashcard-component [flashcards score]
   (fn []
@@ -79,19 +81,17 @@
   (fn []
     (let [count-so-far (+ (:correct @state/score) (:incorrect @state/score))]
       [:span.main
-       [:div
-        {:style {:text-align "center"}}
-        [:h1 "Flashcards"]]
        [:div [reset-deck]]
-       
-       
        [:div
-        {:style {:text-align "right"}}
-        [:h3 (str "remaining: " (count (filter #(:result (val %)) @state/flashcards)))]
-        [:h3 (str (:correct @state/score) "/" count-so-far)]
-        [:h3 (str (if (zero? count-so-far) "0"
-                      (gstring/format "%.1f" (* 100 (/ (:correct @state/score) count-so-far))))
-                  "%")]]
+        {:class "stats"}
+        [:p (str "remaining: " (count (filter #(:result (val %)) @state/flashcards)))
+         "   •   "
+         (str (:correct @state/score) "/" count-so-far)
+         "   •   "
+         (str (:correct @state/score) "/" count-so-far)
+         (str (if (zero? count-so-far) "0"
+                  (gstring/format "%.1f" (* 100 (/ (:correct @state/score) count-so-far))))
+              "%")]]
        [:div
         [:div
          [flashcard-component state/flashcards state/score]]]])))
