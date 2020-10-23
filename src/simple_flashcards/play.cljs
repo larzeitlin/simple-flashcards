@@ -84,11 +84,10 @@
        [:div [reset-deck]]
        [:div
         {:class "stats"}
-        [:p (str "remaining: " (count (remove #(:result (val %)) @state/flashcards)))
+        [:p (str (count (remove #(:result (val %)) @state/flashcards)))
          "   •   "
          (str (:correct @state/score) "/" count-so-far)
          "   •   "
-         (str (:correct @state/score) "/" count-so-far)
          (str (if (zero? count-so-far) "0"
                   (gstring/format "%.1f" (* 100 (/ (:correct @state/score) count-so-far))))
               "%")]]
