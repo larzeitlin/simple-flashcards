@@ -20,19 +20,24 @@
               :on-click #(do (swap! flashcards filter-incorrects-and-reset)
                              (reset! score {:correct 0 :incorrect 0}))}]]))
 
+(defn flip-card [flashcards card-id]
+  (fn []
+    (swap! flashcards update-in [card-id :flipped?] not)))
+
+(defn set-card-result [flashcards score card-id result]
+  (fn []
+    (swap! flashcards assoc-in [card-id :result] result)
+    (if (= "pass" result)
+      (swap! score update :correct inc)
+      (swap! score update :incorrect inc))))
+
 (defn run-flashcards [flashcards score]
   (let [current-card-id-fn (fn [] (-> (remove #(:result (val %)) @flashcards)
                                       first
                                       key))]
     (fn []
-      [:input {:on-key-press (fn [e]
-                               (when (= (.-key e) "Enter")
-                                 #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
       [:div
        {:class "card"}
-       #_{:style {:border-style "solid"
-                  :text-align "center"
-                  :line-height 1.2}}
        [:h1 (if (:flipped? (get @flashcards (current-card-id-fn)))
               (:rev (get @flashcards (current-card-id-fn)))
               (:obv (get @flashcards (current-card-id-fn))))
@@ -40,23 +45,18 @@
          [:br]
          [:input {:type "button"
                   :value "flip!"
-                  :on-click #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)
-                  :on-key-press (fn [e]
-                                  (when (= (.-key e) "Enter")
-                                    #(swap! flashcards update-in [(current-card-id-fn) :flipped?] not)))}]
+                  :on-click (flip-card flashcards (current-card-id-fn))}]
          (when (:flipped? (get @flashcards (current-card-id-fn)))
            [:div
             [:input {:type "button"
                      :value "correct"
                      :class "button"
                      :style {:color "green"}
-                     :on-click #(do (swap! score update :correct inc)
-                                    (swap! flashcards assoc-in [(current-card-id-fn) :result] "pass"))}]
+                     :on-click (set-card-result flashcards score (current-card-id-fn) "pass")}]
             [:input {:type "button"
                      :value "incorrect"
                      :style {:color "red"}
-                     :on-click #(do (swap! score update :incorrect inc)
-                                    (swap! flashcards assoc-in [(current-card-id-fn) :result] "fail"))}]])]]])))
+                     :on-click (set-card-result flashcards score (current-card-id-fn) "fail")}]])]]])))
 
 (defn flashcard-component [flashcards score]
   (fn []

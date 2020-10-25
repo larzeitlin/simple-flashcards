@@ -9,6 +9,7 @@
 ;; Views
 
 (def view-state (r/atom :play))
+(def key-state (r/atom ""))
 
 (defn nav [view-state-atom]
   [:div
