@@ -1,14 +1,8 @@
-It's just a single page flashcard app. No sign-in, no persistence, all client side.
+It's just a simple flashcard app
 
 
 [play with it here!](https://larzeitlin.github.io/simple-flashcards/index.html)
 
-## TODO
-
-- [ ] keyboard input
-- [ ] file upload
-- [ ] export errors
-- [ ] fix padding for long card values
 
 ### Development mode
 
